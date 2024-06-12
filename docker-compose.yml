@@ -1,11 +1,14 @@
-version: "3"
+version: "3.9"
 services:
    backend:
-     image: app:latest
+     container_name: webapp
+     build: .  
+     networks:
+       - jet
      ports:
        - "5000:5000"
      environment:
-       MYSQL_HOST: 192.168.1.90
+       MYSQL_HOST: 192.168.1.151
        MYSQL_USER: admin
        MYSQL_PASSWORD: 1234
        MYSQL_DB: myDb
@@ -13,7 +16,10 @@ services:
        - mysql
    
    mysql:
-    image: mysql
+    container_name: mysql
+    image: mysql:latest
+    networks:
+      - jet
     ports:
       - "3306:3306"
     environment:
@@ -26,3 +32,6 @@ services:
 
 volumes:
   data:  
+
+networks:
+  jet:
